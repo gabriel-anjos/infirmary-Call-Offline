@@ -288,6 +288,8 @@ void loop()
   //Leitos::buttonActiveLeitoteste(leitoEnable01,);
 
   Leitos::buttonActive();
+  Leitos::buttonDisable();
+
   // Leitos::buttonDisableLeito01();
 
   // Leitos::buttonActiveLeito02();
