@@ -4,6 +4,9 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 #include "Button2.h"
+#include <string.h>
+#include <iostream>
+
 
 WiFiClientSecure net;
 
@@ -140,7 +143,7 @@ static void handleIdActive(Button2 t,int id){
 }
 
 static void activeCall(Button2& btn){
-  int statusButton=1;
+  //int statusButton=1;
   if(btn == activeButton01){
     // int id =0;
     // activeButton01.setID(idLeito01);
@@ -149,17 +152,21 @@ static void activeCall(Button2& btn){
     // sendMessage(id,statusButton,postoRef);
     handleIdActive(activeButton01,idLeito01);
   }else if(btn == activeButton02){
-    int id =0;
-    activeButton02.setID(idLeito02);
-    id = activeButton02.getID();
-    Serial.println((int)id);
-    sendMessage(id,statusButton,postoRef);
+    // int id =0;
+    // activeButton02.setID(idLeito02);
+    // id = activeButton02.getID();
+    // Serial.println((int)id);
+    // sendMessage(id,statusButton,postoRef);
+    handleIdActive(activeButton02,idLeito02);
+
   }else if(btn == activeButton03){
-    int id =0;
-    activeButton03.setID(idLeito03);
-    id = activeButton03.getID();
-    Serial.println((int)id);
-    sendMessage(id,statusButton,postoRef);
+    // int id =0;
+    // activeButton03.setID(idLeito03);
+    // id = activeButton03.getID();
+    // Serial.println((int)id);
+    // sendMessage(id,statusButton,postoRef);
+    handleIdActive(activeButton03,idLeito03);
+
   }
   
 }
@@ -167,14 +174,14 @@ static void activeCall(Button2& btn){
 
 static void handleIdDisable(Button2 t,int id){
   int statebutton = 0;
-  int id2=0;
+  int id3=0;
   t.setID(id);
-  id2=t.getID();
-  sendMessage(id2,statebutton,postoRef);
+  id3=t.getID();
+  sendMessage(id3,statebutton,postoRef);
 }
 
 static void disableCall(Button2& btn){
-  int statusButton=0;
+  //int statusButton=0;
   if(btn == disableButton01){
     // int id =0;
     // disableButton01.setID(idLeito01);
@@ -183,17 +190,21 @@ static void disableCall(Button2& btn){
     // sendMessage(id,statusButton,postoRef);
     handleIdDisable(disableButton01,idLeito01);
   }else if(btn == disableButton02){
-    int id =0;
-    disableButton02.setID(idLeito02);
-    id = disableButton02.getID();
-    Serial.println((int)id);
-    sendMessage(id,statusButton,postoRef);
+    // int id =0;
+    // disableButton02.setID(idLeito02);
+    // id = disableButton02.getID();
+    // Serial.println((int)id);
+    // sendMessage(id,statusButton,postoRef);
+    handleIdDisable(disableButton02,idLeito02);
+
   }else if(btn == disableButton03){
-    int id =0;
-    disableButton03.setID(idLeito03);
-    id = disableButton03.getID();
-    Serial.println((int)id);
-    sendMessage(id,statusButton,postoRef);
+    // int id =0;
+    // disableButton03.setID(idLeito03);
+    // id = disableButton03.getID();
+    // Serial.println((int)id);
+    // sendMessage(id,statusButton,postoRef);
+    handleIdDisable(disableButton03,idLeito03);
+
   }
   
 }
@@ -228,17 +239,19 @@ static void setupBeginDisable(){
 
 static void loopButtonEnable(){
   activeButton01.loop();
-  //activeButton02.loop();
-  //activeButton03.loop();
+  activeButton02.loop();
+  activeButton03.loop();
 
 }
 
 static void loopButtonDisable(){
   disableButton01.loop();
-  //disableButton02.loop();
-  //disableButton03.loop();
+  disableButton02.loop();
+  disableButton03.loop();
 
 }
+
+
 
 
 public:
@@ -255,15 +268,15 @@ static void setupBegin(){
 }
 
 static void loopButtons(){
-  Leitos::loopButtonEnable();
-  Leitos::loopButtonDisable();
+Leitos::loopButtonEnable();
+Leitos::loopButtonDisable();
 }
 
 
 
 static void buttonActive(){
 
-  //Leitos::buttonActiveLeito(leitoEnable01,idLeito01);
+  // Leitos::buttonActiveLeito(leitoEnable01,idLeito01);
   // Leitos::buttonActiveLeito(leitoEnable02,idLeito02);
   // Leitos::buttonActiveLeito(leitoEnable03,idLeito03);
 
