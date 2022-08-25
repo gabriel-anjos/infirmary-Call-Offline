@@ -3,11 +3,14 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
+#include "Button2.h"
 
 WiFiClientSecure net;
 
 
 PubSubClient client(net);
+
+Button2 button1,button2,button3,button4;
 
 
 #define AWS_IOT_PUBLISH_TOPIC "EmergencyCall_Leitos"
@@ -26,18 +29,18 @@ PubSubClient client(net);
 //int ButtonReleasedEnableLeito01,ButtonReleasedEnableLeito02,ButtonReleasedEnableLeito03 = 0;
 
 //int ButtonPressDisableLeito01,ButtonPressDisableLeito02,ButtonPressDisableLeito03 = 0;
-int ButtonReleasedDisableLeito01,ButtonReleasedDisableLeito02,ButtonReleasedDisableLeito03 = 0;
+//int ButtonReleasedDisableLeito01,ButtonReleasedDisableLeito02,ButtonReleasedDisableLeito03 = 0;
 
-int ButtonPressDisableLeito01 = 8;
+//int ButtonPressDisableLeito01 = 8;
 
 
 int idLeito01 = 1;
-int idLeito02 = 2;
+int idLeito02 = 9;
 int idLeito03 = 3;
 
 int postoRef = 1;
 
-int statusbutton01,statusbutton02,statusbutton03 = 0;
+////nt statusbutton01,statusbutton02,statusbutton03 = 0;
 
 class Leitos
 {
@@ -57,81 +60,137 @@ static void sendMessage(int idLeito , int statusButton, int postoRef )
 }
 
 
-static void buttonActiveLeito(const uint8_t button, int idleito)
-{
-  int ButtonPressEnableLeito01 = 0;
-  int ButtonReleasedEnableLeito01 = 0;
-  int statusButton = 1;
+// static void buttonActiveLeito(const uint8_t button, int idleito)
+// {
+//   int ButtonPressEnableLeito01 = 0;
+//   int ButtonReleasedEnableLeito01 = 0;
+//   int statusButton = 1;
 
-  if (digitalRead(button) == HIGH)
-  {
-    ButtonPressEnableLeito01 = 1;
-    ButtonReleasedEnableLeito01 = 0;
-  }
-  else
-  {
-    ButtonReleasedEnableLeito01 = 1;
-  }
-  if ((ButtonPressEnableLeito01 == 1) && (ButtonReleasedEnableLeito01 == 1))
-  {
-    ButtonPressEnableLeito01 = 0;
-    ButtonReleasedEnableLeito01 = 0;
+//   if (digitalRead(button) == HIGH)
+//   {
+//     ButtonPressEnableLeito01 = 1;
+//     ButtonReleasedEnableLeito01 = 0;
+//   }
+//   else
+//   {
+//     ButtonReleasedEnableLeito01 = 1;
+//   }
+//   if ((ButtonPressEnableLeito01 == 1) && (ButtonReleasedEnableLeito01 == 1))
+//   {
+//     ButtonPressEnableLeito01 = 0;
+//     ButtonReleasedEnableLeito01 = 0;
 
-    sendMessage(idleito,statusButton,postoRef);
-    Serial.println("sendddd000111");
-    delay(500);
-  }
+//     sendMessage(idleito,statusButton,postoRef);
+//     Serial.println("sendddd000111");
+//     delay(500);
+//   }
+// }
+
+// static void buttonDisableLeito(const uint8_t button, int idleito)
+// {
+  
+//   int statusButton = 0;
+//   int id = idleito;
+
+//   if(id == idLeito01){
+
+//     if (digitalRead(button) == HIGH)
+//     {
+//       ButtonPressDisableLeito01 = 1;
+//       ButtonReleasedDisableLeito01 = 0;
+//       //buttonPressDisable = 1;
+//       //buttonReleasedDisable = 0;
+
+//     }
+//     else
+//     {
+//       ButtonReleasedDisableLeito01 = 1;
+//     // buttonReleasedDisable = 1;
+
+//     }
+//     //if ((buttonPressDisable == 1) && (buttonReleasedDisable == 1))
+//     if ((ButtonPressDisableLeito01 == 1) && (ButtonReleasedDisableLeito01 == 1))
+
+//     {
+//       //buttonPressDisable = 0;
+//       //buttonReleasedDisable = 0;
+//       ButtonPressDisableLeito01 = 0;
+//       ButtonReleasedDisableLeito01 = 0;
+
+//       sendMessage(idleito,statusButton,postoRef);
+
+//       Serial.println("disableee00011");
+//       delay(500);
+//     }
+
+//   }
+
+
+
+  
+//}
+
+int ttt(Button2 t){
+  int tid;
+  tid = t.getID();
+  return tid;
 }
 
-static void buttonDisableLeito(const uint8_t button, int idleito)
-{
-  
-  int statusButton = 0;
-  int id = idleito;
-
-  if(id == idLeito01){
-
-    if (digitalRead(button) == HIGH)
-    {
-      ButtonPressDisableLeito01 = 1;
-      ButtonReleasedDisableLeito01 = 0;
-      //buttonPressDisable = 1;
-      //buttonReleasedDisable = 0;
-
-    }
-    else
-    {
-      ButtonReleasedDisableLeito01 = 1;
-    // buttonReleasedDisable = 1;
-
-    }
-    //if ((buttonPressDisable == 1) && (buttonReleasedDisable == 1))
-    if ((ButtonPressDisableLeito01 == 1) && (ButtonReleasedDisableLeito01 == 1))
-
-    {
-      //buttonPressDisable = 0;
-      //buttonReleasedDisable = 0;
-      ButtonPressDisableLeito01 = 0;
-      ButtonReleasedDisableLeito01 = 0;
-
-      sendMessage(idleito,statusButton,postoRef);
-
-      Serial.println("disableee00011");
-      delay(500);
-    }
-
+static void activeCall(Button2& btn){
+  int statusButton=1;
+  if(btn == button1){
+    int id =0;
+    button1.setID(idLeito01);
+    id = button1.getID();
+    Serial.println((int)id);
+    sendMessage(id,statusButton,postoRef);
+  }else if(btn == button2){
+    int id =0;
+    button2.setID(idLeito02);
+    id = button2.getID();
+    Serial.println((int)id);
+    sendMessage(id,statusButton,postoRef);
   }
-
-
-
   
 }
+
+static void disableCall(Button2& btn){
+  int statusButton=0;
+  if(btn == button1){
+    int id =0;
+    button1.setID(idLeito01);
+    id = button1.getID();
+    Serial.println((int)id);
+    sendMessage(id,statusButton,postoRef);
+  }else if(btn == button2){
+    int id =0;
+    button2.setID(idLeito02);
+    id = button2.getID();
+    Serial.println((int)id);
+    sendMessage(id,statusButton,postoRef);
+  }
+  
+}
+
 
 public:
 
+static void setupPressHandle(){
+  button1.setPressedHandler(Leitos::activeCall);
+  button2.setPressedHandler(Leitos::activeCall);
+}
+
+static void setupBegin(){
+  button1.begin(leitoEnable01,INPUT,false, false);
+  button2.begin(leitoEnable02,INPUT,false, false);
+}
+
+
+
+
 static void buttonActive(){
 
-  Leitos::buttonActiveLeito(leitoEnable01,idLeito01);
+  //Leitos::buttonActiveLeito(leitoEnable01,idLeito01);
   // Leitos::buttonActiveLeito(leitoEnable02,idLeito02);
   // Leitos::buttonActiveLeito(leitoEnable03,idLeito03);
 
@@ -139,7 +198,7 @@ static void buttonActive(){
 
 static void buttonDisable(){
 
-  Leitos::buttonDisableLeito(leitoDisable01,idLeito01);
+ // Leitos::buttonDisableLeito(leitoDisable01,idLeito01);
   // Leitos::buttonDisableLeito(leitoDisable02,idLeito02);
   // Leitos::buttonDisableLeito(leitoDisable03,idLeito03);
 

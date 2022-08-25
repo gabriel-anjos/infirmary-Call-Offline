@@ -9,6 +9,7 @@
 #include "secrets.h"
 #include "leitos.hpp"
 #include "connectionWifi.h"
+#include "Button2.h"
 //#define RST_PIN D3
 //#define SS_PIN D4
 // #define leitoEnable01 D7
@@ -20,7 +21,7 @@
 //#define ButtonSend D6
 //#define ButtonDisable D4
 
-
+//Button2 button1;
 
 // int IdLeito = 8;
 // int Posto_ref = 1;
@@ -256,6 +257,11 @@ void checkConnection()
   }
   now = time(nullptr);
 }
+
+// void pressed(Button2& btn){
+//   Serial.println("ativooooo");
+// }
+
 void setup()
 {
   Serial.begin(115200);
@@ -274,21 +280,24 @@ void setup()
   pinMode(leitoDisable02, INPUT);
   pinMode(leitoEnable03, INPUT);
   pinMode(leitoDisable03, INPUT);
-
-
+  Leitos::setupBegin();
+  Leitos::setupPressHandle();
 }
 
 void loop()
 
 {
   checkConnection();
+  button1.loop();
+  button2.loop();
+
   
   //Leitos::buttonActiveLeito01();
 
   //Leitos::buttonActiveLeitoteste(leitoEnable01,);
 
-  Leitos::buttonActive();
-  Leitos::buttonDisable();
+  //Leitos::buttonActive();
+  //Leitos::buttonDisable();
 
   // Leitos::buttonDisableLeito01();
 
