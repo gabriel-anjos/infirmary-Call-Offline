@@ -290,7 +290,6 @@ void loop()
   checkConnection();
   Leitos::loopButtons();
 
-  /// DEUUUU MERDA TA REINICIANDO A PLACA @@@@@@@@@@@@;
   
   //Leitos::buttonActiveLeito01();
 
