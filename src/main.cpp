@@ -288,9 +288,9 @@ void loop()
 
 {
   checkConnection();
-  activeButton01.loop();
-  activeButton02.loop();
+  Leitos::loopButtons();
 
+  /// DEUUUU MERDA TA REINICIANDO A PLACA @@@@@@@@@@@@;
   
   //Leitos::buttonActiveLeito01();
 

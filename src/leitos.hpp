@@ -131,20 +131,23 @@ static void sendMessage(int idLeito , int statusButton, int postoRef )
   
 //}
 
-int ttt(Button2 t){
-  int tid;
-  tid = t.getID();
-  return tid;
+static void handleIdActive(Button2 t,int id){
+  int statebutton = 1;
+  int id2=0;
+  t.setID(id);
+  id2=t.getID();
+  sendMessage(id2,statebutton,postoRef);
 }
 
 static void activeCall(Button2& btn){
   int statusButton=1;
   if(btn == activeButton01){
-    int id =0;
-    activeButton01.setID(idLeito01);
-    id = activeButton01.getID();
-    Serial.println((int)id);
-    sendMessage(id,statusButton,postoRef);
+    // int id =0;
+    // activeButton01.setID(idLeito01);
+    // id = activeButton01.getID();
+    // Serial.println((int)id);
+    // sendMessage(id,statusButton,postoRef);
+    handleIdActive(activeButton01,idLeito01);
   }else if(btn == activeButton02){
     int id =0;
     activeButton02.setID(idLeito02);
@@ -161,14 +164,24 @@ static void activeCall(Button2& btn){
   
 }
 
+
+static void handleIdDisable(Button2 t,int id){
+  int statebutton = 0;
+  int id2=0;
+  t.setID(id);
+  id2=t.getID();
+  sendMessage(id2,statebutton,postoRef);
+}
+
 static void disableCall(Button2& btn){
   int statusButton=0;
   if(btn == disableButton01){
-    int id =0;
-    disableButton01.setID(idLeito01);
-    id = disableButton01.getID();
-    Serial.println((int)id);
-    sendMessage(id,statusButton,postoRef);
+    // int id =0;
+    // disableButton01.setID(idLeito01);
+    // id = disableButton01.getID();
+    // Serial.println((int)id);
+    // sendMessage(id,statusButton,postoRef);
+    handleIdDisable(disableButton01,idLeito01);
   }else if(btn == disableButton02){
     int id =0;
     disableButton02.setID(idLeito02);
@@ -177,7 +190,7 @@ static void disableCall(Button2& btn){
     sendMessage(id,statusButton,postoRef);
   }else if(btn == disableButton03){
     int id =0;
-    disableButton03.setID(idLeito02);
+    disableButton03.setID(idLeito03);
     id = disableButton03.getID();
     Serial.println((int)id);
     sendMessage(id,statusButton,postoRef);
@@ -213,6 +226,20 @@ static void setupBeginDisable(){
 
 }
 
+static void loopButtonEnable(){
+  activeButton01.loop();
+  //activeButton02.loop();
+  //activeButton03.loop();
+
+}
+
+static void loopButtonDisable(){
+  disableButton01.loop();
+  //disableButton02.loop();
+  //disableButton03.loop();
+
+}
+
 
 public:
 
@@ -227,7 +254,10 @@ static void setupBegin(){
   Leitos::setupBeginDisable();
 }
 
-
+static void loopButtons(){
+  Leitos::loopButtonEnable();
+  Leitos::loopButtonDisable();
+}
 
 
 
