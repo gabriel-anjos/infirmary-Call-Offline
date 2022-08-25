@@ -288,8 +288,8 @@ void loop()
 
 {
   checkConnection();
-  button1.loop();
-  button2.loop();
+  activeButton01.loop();
+  activeButton02.loop();
 
   
   //Leitos::buttonActiveLeito01();

@@ -10,7 +10,7 @@ WiFiClientSecure net;
 
 PubSubClient client(net);
 
-Button2 button1,button2,button3,button4;
+Button2 activeButton01,activeButton02,activeButton03,disableButton01,disableButton02,disableButton03;
 //depois separar os nomes para buttonEnable1,buttonDisable1.....
 
 
@@ -139,16 +139,22 @@ int ttt(Button2 t){
 
 static void activeCall(Button2& btn){
   int statusButton=1;
-  if(btn == button1){
+  if(btn == activeButton01){
     int id =0;
-    button1.setID(idLeito01);
-    id = button1.getID();
+    activeButton01.setID(idLeito01);
+    id = activeButton01.getID();
     Serial.println((int)id);
     sendMessage(id,statusButton,postoRef);
-  }else if(btn == button2){
+  }else if(btn == activeButton02){
     int id =0;
-    button2.setID(idLeito02);
-    id = button2.getID();
+    activeButton02.setID(idLeito02);
+    id = activeButton02.getID();
+    Serial.println((int)id);
+    sendMessage(id,statusButton,postoRef);
+  }else if(btn == activeButton03){
+    int id =0;
+    activeButton03.setID(idLeito03);
+    id = activeButton03.getID();
     Serial.println((int)id);
     sendMessage(id,statusButton,postoRef);
   }
@@ -157,16 +163,22 @@ static void activeCall(Button2& btn){
 
 static void disableCall(Button2& btn){
   int statusButton=0;
-  if(btn == button1){
+  if(btn == disableButton01){
     int id =0;
-    button1.setID(idLeito01);
-    id = button1.getID();
+    disableButton01.setID(idLeito01);
+    id = disableButton01.getID();
     Serial.println((int)id);
     sendMessage(id,statusButton,postoRef);
-  }else if(btn == button2){
+  }else if(btn == disableButton02){
     int id =0;
-    button2.setID(idLeito02);
-    id = button2.getID();
+    disableButton02.setID(idLeito02);
+    id = disableButton02.getID();
+    Serial.println((int)id);
+    sendMessage(id,statusButton,postoRef);
+  }else if(btn == disableButton03){
+    int id =0;
+    disableButton03.setID(idLeito02);
+    id = disableButton03.getID();
     Serial.println((int)id);
     sendMessage(id,statusButton,postoRef);
   }
@@ -174,23 +186,31 @@ static void disableCall(Button2& btn){
 }
 
 static void setupPressHandleActive(){
-  button1.setPressedHandler(Leitos::activeCall);
-  button2.setPressedHandler(Leitos::activeCall);
+  activeButton01.setPressedHandler(Leitos::activeCall);
+  activeButton02.setPressedHandler(Leitos::activeCall);
+  activeButton03.setPressedHandler(Leitos::activeCall);
+
 }
 
 static void setupPressHandleDisable(){
-  button1.setPressedHandler(Leitos::disableCall);
-  button2.setPressedHandler(Leitos::disableCall);
+  disableButton01.setPressedHandler(Leitos::disableCall);
+  disableButton02.setPressedHandler(Leitos::disableCall);
+  disableButton03.setPressedHandler(Leitos::disableCall);
+
 }
 
 static void setupBeginEnable(){
-  button1.begin(leitoEnable01,INPUT,false, false);
-  button2.begin(leitoEnable02,INPUT,false, false);
+  activeButton01.begin(leitoEnable01,INPUT,false, false);
+  activeButton02.begin(leitoEnable02,INPUT,false, false);
+  activeButton03.begin(leitoEnable03,INPUT,false, false);
+
 }
 
 static void setupBeginDisable(){
-  button1.begin(leitoDisable01,INPUT,false, false);
-  button2.begin(leitoDisable02,INPUT,false, false);
+  disableButton01.begin(leitoDisable01,INPUT,false, false);
+  disableButton02.begin(leitoDisable02,INPUT,false, false);
+  disableButton03.begin(leitoDisable03,INPUT,false, false);
+
 }
 
 
