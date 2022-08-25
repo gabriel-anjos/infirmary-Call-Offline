@@ -11,6 +11,7 @@ WiFiClientSecure net;
 PubSubClient client(net);
 
 Button2 button1,button2,button3,button4;
+//depois separar os nomes para buttonEnable1,buttonDisable1.....
 
 
 #define AWS_IOT_PUBLISH_TOPIC "EmergencyCall_Leitos"
@@ -172,18 +173,40 @@ static void disableCall(Button2& btn){
   
 }
 
-
-public:
-
-static void setupPressHandle(){
+static void setupPressHandleActive(){
   button1.setPressedHandler(Leitos::activeCall);
   button2.setPressedHandler(Leitos::activeCall);
 }
 
-static void setupBegin(){
+static void setupPressHandleDisable(){
+  button1.setPressedHandler(Leitos::disableCall);
+  button2.setPressedHandler(Leitos::disableCall);
+}
+
+static void setupBeginEnable(){
   button1.begin(leitoEnable01,INPUT,false, false);
   button2.begin(leitoEnable02,INPUT,false, false);
 }
+
+static void setupBeginDisable(){
+  button1.begin(leitoDisable01,INPUT,false, false);
+  button2.begin(leitoDisable02,INPUT,false, false);
+}
+
+
+public:
+
+static void setupPressHandle(){
+ Leitos::setupPressHandleActive();
+ Leitos::setupPressHandleDisable();
+
+}
+
+static void setupBegin(){
+  Leitos::setupBeginEnable();
+  Leitos::setupBeginDisable();
+}
+
 
 
 
