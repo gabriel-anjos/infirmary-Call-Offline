@@ -8,24 +8,25 @@
 #include <iostream>
 
 
-WiFiClientSecure net;
+//WiFiClientSecure net;
 
-
-PubSubClient client(net);
+WiFiClient wifiClient;
+PubSubClient client(wifiClient);
 
 Button2 activeButton01,activeButton02,activeButton03,disableButton01,disableButton02,disableButton03;
 //depois separar os nomes para buttonEnable1,buttonDisable1.....
 
 
 #define AWS_IOT_PUBLISH_TOPIC "EmergencyCall_Leitos"
+#define led D0
 
 #define leitoEnable01 D7
-#define leitoEnable02 D6
-#define leitoEnable03 D8
+#define leitoEnable02 D3
+#define leitoEnable03 D1
 
 
 #define leitoDisable01 D5 
-#define leitoDisable02 D3
+#define leitoDisable02 D6
 #define leitoDisable03 D2
 
 
@@ -46,6 +47,7 @@ int postoRef = 1;
 
 ////nt statusbutton01,statusbutton02,statusbutton03 = 0;
 
+
 class Leitos
 {
 
@@ -54,9 +56,9 @@ private:
 static void sendMessage(int idLeito , int statusButton, int postoRef )
 {
   StaticJsonDocument<512> doc;
-  doc["ID"] = idLeito;
-  doc["Status"] = statusButton;
-  doc["posto-ref"] = postoRef;
+  doc["id"] = idLeito;
+  doc["status"] = statusButton;
+  doc["posto_ref"] = postoRef;
   char jsonBuffer[700];
   serializeJson(doc, jsonBuffer);
   client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
@@ -134,6 +136,14 @@ static void sendMessage(int idLeito , int statusButton, int postoRef )
   
 //}
 
+static void handleIdDisable(Button2 t,int id){
+  int statebutton = 0;
+  int id3=0;
+  t.setID(id);
+  id3=t.getID();
+  sendMessage(id3,statebutton,postoRef);
+}
+
 static void handleIdActive(Button2 t,int id){
   int statebutton = 1;
   int id2=0;
@@ -172,13 +182,6 @@ static void activeCall(Button2& btn){
 }
 
 
-static void handleIdDisable(Button2 t,int id){
-  int statebutton = 0;
-  int id3=0;
-  t.setID(id);
-  id3=t.getID();
-  sendMessage(id3,statebutton,postoRef);
-}
 
 static void disableCall(Button2& btn){
   //int statusButton=0;
@@ -224,16 +227,16 @@ static void setupPressHandleDisable(){
 }
 
 static void setupBeginEnable(){
-  activeButton01.begin(leitoEnable01,INPUT,false, false);
-  activeButton02.begin(leitoEnable02,INPUT,false, false);
-  activeButton03.begin(leitoEnable03,INPUT,false, false);
+  activeButton01.begin(leitoEnable01,INPUT_PULLUP,false, false);
+  activeButton02.begin(leitoEnable02,INPUT_PULLUP,false, false);
+  activeButton03.begin(leitoEnable03,INPUT_PULLUP,false, false);
 
 }
 
 static void setupBeginDisable(){
-  disableButton01.begin(leitoDisable01,INPUT,false, false);
-  disableButton02.begin(leitoDisable02,INPUT,false, false);
-  disableButton03.begin(leitoDisable03,INPUT,false, false);
+  disableButton01.begin(leitoDisable01,INPUT_PULLUP,false, false);
+  disableButton02.begin(leitoDisable02,INPUT_PULLUP,false, false);
+  disableButton03.begin(leitoDisable03,INPUT_PULLUP,false, false);
 
 }
 

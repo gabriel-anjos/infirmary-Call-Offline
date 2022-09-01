@@ -45,9 +45,9 @@ const long interval = 5000;
 //MFRC522 mfrc522(SS_PIN, RST_PIN);
 //WiFiClientSecure net;
 
-BearSSL::X509List cert(cacert);
-BearSSL::X509List client_crt(client_cert);
-BearSSL::PrivateKey key(privkey);
+// BearSSL::X509List cert(cacert);
+// BearSSL::X509List client_crt(client_cert);
+// BearSSL::PrivateKey key(privkey);
 
 //PubSubClient client(net);
 
@@ -265,21 +265,28 @@ void checkConnection()
 void setup()
 {
   Serial.begin(115200);
-  client.setServer(MQTT_HOST, 8883);
-  net.setTrustAnchors(&cert);
-  net.setClientRSACert(&client_crt, &key);
+  client.setServer(MQTT_HOST, 1883);
+  // net.setTrustAnchors(&cert);
+  // net.setClientRSACert(&client_crt, &key);
   connectWifi();
   NTPConnect();
   SPI.begin();
   //mfrc522.PCD_Init();
   //pinMode(ButtonSend, INPUT);
   //pinMode(ButtonDisable, INPUT);
-  pinMode(leitoEnable01, INPUT);
-  pinMode(leitoDisable01, INPUT);
-  pinMode(leitoEnable02, INPUT);
-  pinMode(leitoDisable02, INPUT);
-  pinMode(leitoEnable03, INPUT);
-  pinMode(leitoDisable03, INPUT);
+  // pinMode(leitoEnable01, INPUT);
+  // pinMode(leitoDisable01, INPUT);
+  // pinMode(leitoEnable02, INPUT);
+  // pinMode(leitoDisable02, INPUT);
+  // pinMode(leitoEnable03, INPUT);
+  // pinMode(leitoDisable03, INPUT);
+  // digitalWrite(leitoEnable01,LOW);
+  // digitalWrite(leitoEnable02,LOW);
+  // digitalWrite(leitoEnable03,LOW);
+  // digitalWrite(leitoDisable01,LOW);
+  // digitalWrite(leitoDisable02,LOW);
+  // digitalWrite(leitoDisable03,LOW);
+  pinMode(led,OUTPUT);
   Leitos::setupBegin();
   Leitos::setupPressHandle();
 }
