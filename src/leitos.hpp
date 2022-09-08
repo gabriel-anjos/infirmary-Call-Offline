@@ -119,28 +119,28 @@ class Leitos
   static void setupBeginEnable(){
     activeButton01.begin(leitoEnable01,INPUT_PULLUP,false, false);
     activeButton02.begin(leitoEnable02,INPUT_PULLUP,false, false);
-    activeButton03.begin(leitoEnable03,INPUT_PULLUP,false, false);
+    //activeButton03.begin(leitoEnable03,INPUT_PULLUP,false, false);
 
   }
 
   static void setupBeginDisable(){
     disableButton01.begin(leitoDisable01,INPUT_PULLUP,false, false);
     disableButton02.begin(leitoDisable02,INPUT_PULLUP,false, false);
-    disableButton03.begin(leitoDisable03,INPUT_PULLUP,false, false);
+    //disableButton03.begin(leitoDisable03,INPUT_PULLUP,false, false);
 
   }
 
   static void loopButtonEnable(){
     activeButton01.loop();
     activeButton02.loop();
-    activeButton03.loop();
+    //activeButton03.loop();
 
   }
 
   static void loopButtonDisable(){
     disableButton01.loop();
     disableButton02.loop();
-    disableButton03.loop();
+    //disableButton03.loop();
 
   }
 
