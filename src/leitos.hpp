@@ -5,10 +5,6 @@
 #include <ArduinoJson.h>
 #include "Button2.h"
 #include <string.h>
-#include <iostream>
-
-
-//WiFiClientSecure net;
 
 WiFiClient wifiClient;
 PubSubClient client(wifiClient);
@@ -31,7 +27,7 @@ Button2 activeButton01,activeButton02,activeButton03,disableButton01,disableButt
 
 
 int idLeito01 = 1;
-int idLeito02 = 9;
+int idLeito02 = 2;
 int idLeito03 = 3;
 
 int postoRef = 1;
@@ -41,133 +37,133 @@ int postoRef = 1;
 class Leitos
 {
 
-private:
+  private:
 
-static void sendMessage(int idLeito , int statusButton, int postoRef )
-{
-  StaticJsonDocument<512> doc;
-  doc["id"] = idLeito;
-  doc["status"] = statusButton;
-  doc["posto_ref"] = postoRef;
-  char jsonBuffer[700];
-  serializeJson(doc, jsonBuffer);
-  client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
-  Serial.println(jsonBuffer);
-}
+  static void sendMessage(int idLeito , int statusButton, int postoRef )
+  {
+    StaticJsonDocument<512> doc;
+    doc["id"] = idLeito;
+    doc["status"] = statusButton;
+    doc["posto_ref"] = postoRef;
+    char jsonBuffer[700];
+    serializeJson(doc, jsonBuffer);
+    client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+    Serial.println(jsonBuffer);
+  }
 
 
-static void handleIdDisable(Button2 t,int id){
-  int statebutton = 0;
-  int id3=0;
-  t.setID(id);
-  id3=t.getID();
-  sendMessage(id3,statebutton,postoRef);
-}
+  static void handleIdDisable(Button2 t,int id){
+    int statebutton = 0;
+    int id3=0;
+    t.setID(id);
+    id3=t.getID();
+    sendMessage(id3,statebutton,postoRef);
+  }
 
-static void handleIdActive(Button2 t,int id){
-  int statebutton = 1;
-  int id2=0;
-  t.setID(id);
-  id2=t.getID();
-  sendMessage(id2,statebutton,postoRef);
-}
+  static void handleIdActive(Button2 t,int id){
+    int statebutton = 1;
+    int id2=0;
+    t.setID(id);
+    id2=t.getID();
+    sendMessage(id2,statebutton,postoRef);
+  }
 
-static void activeCall(Button2& btn){
-  if(btn == activeButton01){
-  
-    handleIdActive(activeButton01,idLeito01);
-  }else if(btn == activeButton02){
-  
-    handleIdActive(activeButton02,idLeito02);
+  static void activeCall(Button2& btn){
+    if(btn == activeButton01){
+    
+      handleIdActive(activeButton01,idLeito01);
+    }else if(btn == activeButton02){
+    
+      handleIdActive(activeButton02,idLeito02);
 
-  }else if(btn == activeButton03){
+    }else if(btn == activeButton03){
 
-    handleIdActive(activeButton03,idLeito03);
+      handleIdActive(activeButton03,idLeito03);
+
+    }
+    
+  }
+
+
+
+  static void disableCall(Button2& btn){
+    if(btn == disableButton01){
+    
+      handleIdDisable(disableButton01,idLeito01);
+    }else if(btn == disableButton02){
+    
+      handleIdDisable(disableButton02,idLeito02);
+
+    }else if(btn == disableButton03){
+    
+      handleIdDisable(disableButton03,idLeito03);
+
+    }
+    
+  }
+
+  static void setupPressHandleActive(){
+    activeButton01.setPressedHandler(Leitos::activeCall);
+    activeButton02.setPressedHandler(Leitos::activeCall);
+    activeButton03.setPressedHandler(Leitos::activeCall);
 
   }
-  
-}
 
-
-
-static void disableCall(Button2& btn){
-  if(btn == disableButton01){
-   
-    handleIdDisable(disableButton01,idLeito01);
-  }else if(btn == disableButton02){
-   
-    handleIdDisable(disableButton02,idLeito02);
-
-  }else if(btn == disableButton03){
-  
-    handleIdDisable(disableButton03,idLeito03);
+  static void setupPressHandleDisable(){
+    disableButton01.setPressedHandler(Leitos::disableCall);
+    disableButton02.setPressedHandler(Leitos::disableCall);
+    disableButton03.setPressedHandler(Leitos::disableCall);
 
   }
-  
-}
 
-static void setupPressHandleActive(){
-  activeButton01.setPressedHandler(Leitos::activeCall);
-  activeButton02.setPressedHandler(Leitos::activeCall);
-  activeButton03.setPressedHandler(Leitos::activeCall);
+  static void setupBeginEnable(){
+    activeButton01.begin(leitoEnable01,INPUT_PULLUP,false, false);
+    activeButton02.begin(leitoEnable02,INPUT_PULLUP,false, false);
+    activeButton03.begin(leitoEnable03,INPUT_PULLUP,false, false);
 
-}
+  }
 
-static void setupPressHandleDisable(){
-  disableButton01.setPressedHandler(Leitos::disableCall);
-  disableButton02.setPressedHandler(Leitos::disableCall);
-  disableButton03.setPressedHandler(Leitos::disableCall);
+  static void setupBeginDisable(){
+    disableButton01.begin(leitoDisable01,INPUT_PULLUP,false, false);
+    disableButton02.begin(leitoDisable02,INPUT_PULLUP,false, false);
+    disableButton03.begin(leitoDisable03,INPUT_PULLUP,false, false);
 
-}
+  }
 
-static void setupBeginEnable(){
-  activeButton01.begin(leitoEnable01,INPUT_PULLUP,false, false);
-  activeButton02.begin(leitoEnable02,INPUT_PULLUP,false, false);
-  activeButton03.begin(leitoEnable03,INPUT_PULLUP,false, false);
+  static void loopButtonEnable(){
+    activeButton01.loop();
+    activeButton02.loop();
+    activeButton03.loop();
 
-}
+  }
 
-static void setupBeginDisable(){
-  disableButton01.begin(leitoDisable01,INPUT_PULLUP,false, false);
-  disableButton02.begin(leitoDisable02,INPUT_PULLUP,false, false);
-  disableButton03.begin(leitoDisable03,INPUT_PULLUP,false, false);
+  static void loopButtonDisable(){
+    disableButton01.loop();
+    disableButton02.loop();
+    disableButton03.loop();
 
-}
-
-static void loopButtonEnable(){
-  activeButton01.loop();
-  activeButton02.loop();
-  activeButton03.loop();
-
-}
-
-static void loopButtonDisable(){
-  disableButton01.loop();
-  disableButton02.loop();
-  disableButton03.loop();
-
-}
+  }
 
 
 
 
-public:
+  public:
 
-static void setupPressHandle(){
- Leitos::setupPressHandleActive();
- Leitos::setupPressHandleDisable();
+  static void setupPressHandle(){
+  Leitos::setupPressHandleActive();
+  Leitos::setupPressHandleDisable();
 
-}
+  }
 
-static void setupBegin(){
-  Leitos::setupBeginEnable();
-  Leitos::setupBeginDisable();
-}
+  static void setupBegin(){
+    Leitos::setupBeginEnable();
+    Leitos::setupBeginDisable();
+  }
 
-static void loopButtons(){
-Leitos::loopButtonEnable();
-Leitos::loopButtonDisable();
-}
+  static void loopButtons(){
+  Leitos::loopButtonEnable();
+  Leitos::loopButtonDisable();
+  }
 
 
 

@@ -7,8 +7,8 @@
 #include <ArduinoJson.h>
 #include <time.h>
 #include "secrets.h"
-#include "leitos.hpp"
 #include "connectionWifi.h"
+#include "leitos.hpp"
 #include "Button2.h"
 
 
@@ -27,9 +27,6 @@ const long interval = 5000;
 
 //MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-// BearSSL::X509List cert(cacert);
-// BearSSL::X509List client_crt(client_cert);
-// BearSSL::PrivateKey key(privkey);
 
 
 time_t now;
@@ -140,7 +137,7 @@ void connectBroker()
   Serial.print("MQTT connecting ");
   while (!client.connected())
   {
-    if (client.connect(THINGNAME))
+    if (client.connect(DEVICE_NAME))
     {
       Serial.println("connected!");
     }
@@ -185,8 +182,6 @@ void setup()
 {
   Serial.begin(115200);
   client.setServer(MQTT_HOST, 1883);
-  // net.setTrustAnchors(&cert);
-  // net.setClientRSACert(&client_crt, &key);
   connectWifi();
   NTPConnect();
   SPI.begin();
