@@ -16,8 +16,8 @@ Button2 activeButton01,activeButton02,activeButton03,disableButton01,disableButt
 #define AWS_IOT_PUBLISH_TOPIC "EmergencyCall_Leitos"
 #define led D0
 
-#define leitoEnable01 D7
-#define leitoEnable02 D8
+#define leitoEnable01 D7 
+#define leitoEnable02 D3
 #define leitoEnable03 D1
 
 
@@ -109,38 +109,41 @@ class Leitos
 
   }
 
-  static void setupPressHandleDisable(){
+  static void setupPressHandleDisable(){\
     disableButton01.setPressedHandler(Leitos::disableCall);
     disableButton02.setPressedHandler(Leitos::disableCall);
     disableButton03.setPressedHandler(Leitos::disableCall);
 
   }
-
+  /// Quando nao for utilizar o botao desativalo, adicionando duas barras ao começo da linha.
   static void setupBeginEnable(){
-    activeButton01.begin(leitoEnable01,INPUT_PULLUP,false, false);
-    activeButton02.begin(leitoEnable02,INPUT_PULLUP,false, false);
-    activeButton03.begin(leitoEnable03,INPUT_PULLUP,false, false);
+    activeButton01.begin(leitoEnable01,INPUT_PULLUP,false, true);    //comentar essa linha se nao for utilizar o botao 1
+    activeButton02.begin(leitoEnable02,INPUT_PULLUP,false, true);    //comentar essa linha se nao for utilizar o botao 2
+    activeButton03.begin(leitoEnable03,INPUT_PULLUP,false, true);    //comentar essa linha se nao for utilizar o botao 3
 
   }
 
+  /// Quando nao for utilizar o botao desativalo, adicionando duas barras ao começo da linha.
   static void setupBeginDisable(){
-    disableButton01.begin(leitoDisable01,INPUT_PULLUP,false, false);
-    disableButton02.begin(leitoDisable02,INPUT_PULLUP,false, false);
-    disableButton03.begin(leitoDisable03,INPUT_PULLUP,false, false);
+    disableButton01.begin(leitoDisable01,INPUT_PULLUP,false, true);   //comentar essa linha se nao for utilizar o botao 1
+    disableButton02.begin(leitoDisable02,INPUT_PULLUP,false, true);   //comentar essa linha se nao for utilizar o botao 2
+    disableButton03.begin(leitoDisable03,INPUT_PULLUP,false, true);   //comentar essa linha se nao for utilizar o botao 3
 
   }
+  /// Quando nao for utilizar o botao desativalo, adicionando duas barras ao começo da linha.
 
   static void loopButtonEnable(){
-    activeButton01.loop();
-    activeButton02.loop();
-    activeButton03.loop();
+    activeButton01.loop();        //comentar essa linha se nao for utilizar o botao 1
+    activeButton02.loop();        //comentar essa linha se nao for utilizar o botao 2
+    activeButton03.loop();        //comentar essa linha se nao for utilizar o botao 3
 
   }
+  /// Quando nao for utilizar o botao desativalo, adicionando duas barras ao começo da linha.
 
   static void loopButtonDisable(){
-    disableButton01.loop();
-    disableButton02.loop();
-    disableButton03.loop();
+    disableButton01.loop();      //comentar essa linha se nao for utilizar o botao 1
+    disableButton02.loop();      //comentar essa linha se nao for utilizar o botao 2
+    disableButton03.loop();      //comentar essa linha se nao for utilizar o botao 3
 
   }
 
