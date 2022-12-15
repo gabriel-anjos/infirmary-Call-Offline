@@ -17,7 +17,7 @@ Button2 activeButton01,activeButton02,activeButton03,disableButton01,disableButt
 #define led D0
 
 #define leitoEnable01 D7 
-#define leitoEnable02 D3
+#define leitoEnable02 D8
 #define leitoEnable03 D1
 
 
@@ -26,9 +26,9 @@ Button2 activeButton01,activeButton02,activeButton03,disableButton01,disableButt
 #define leitoDisable03 D2
 
 
-int idLeito01 = 1;
-int idLeito02 = 2;
-int idLeito03 = 3;
+int idLeito01 = 4;
+int idLeito02 = 5;
+int idLeito03 = 6;
 
 int postoRef = 1;
 

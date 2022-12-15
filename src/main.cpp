@@ -117,7 +117,7 @@ void acessoNegado()
 
 void connectWifi()
 {
-  delay(3000);
+  delay(1000);
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.println(String("Attempting to connect to SSID: ") + String(WIFI_SSID));
@@ -147,7 +147,7 @@ void connectBroker()
       Serial.println("client foi desconectado!! ");
       Serial.print("failed, reason -> ");
       Serial.println(client.state());
-      delay(2000);
+      delay(1000);
       if (TryCount == 10)
         ESP.restart();
 
