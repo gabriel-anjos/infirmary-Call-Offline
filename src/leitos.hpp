@@ -8,6 +8,7 @@
 
 WiFiClient wifiClient;
 PubSubClient client(wifiClient);
+// buttons
 
 Button2 activeButton01,activeButton02,activeButton03,disableButton01,disableButton02,disableButton03;
 //depois separar os nomes para buttonEnable1,buttonDisable1.....
